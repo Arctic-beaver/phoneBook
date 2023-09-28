@@ -1,6 +1,6 @@
-﻿namespace API.Entities
+﻿namespace Api.Dtos.ContactDtos
 {
-    public abstract class Contact
+    public class ContactDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

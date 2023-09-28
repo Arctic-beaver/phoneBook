@@ -1,16 +1,15 @@
-﻿using Api.Dtos.PersonDtos;
-using Api.Services.Interfaces;
+﻿using Api.Services.Interfaces;
 using API.Entities;
-using API.Persistence;
+using API.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services
 {
     public class PersonService : IPersonService
     {
-        private readonly DatabaseContext _context;
+        private readonly IDatabaseContext _context;
 
-        public PersonService(DatabaseContext context)
+        public PersonService(IDatabaseContext context)
         {
             _context = context;
         }

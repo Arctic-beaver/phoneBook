@@ -4,6 +4,6 @@ namespace Api.Services.Interfaces
 {
     public interface IContactService
     {
-        Task<Contact[]> GetAllContacts();
+        Task<IEnumerable<Contact>> GetAllContacts();
     }
 }

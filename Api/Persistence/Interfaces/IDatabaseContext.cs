@@ -8,7 +8,7 @@ namespace API.Persistence.Interfaces
     {
         DbSet<Contact> Contacts { get; set; }
         DbSet<Person> Persons { get; set; }
-        DbSet<Organization> Organization { get; set; }
+        DbSet<Organization> Organizations { get; set; }
 
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Api.Persistence.Migrations
+namespace Api.Persistence.Migraions
 {
     [DbContext(typeof(DatabaseContext))]
     partial class DatabaseContextModelSnapshot : ModelSnapshot
@@ -24,11 +24,9 @@ namespace Api.Persistence.Migrations
 
             modelBuilder.Entity("API.Entities.Contact", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Comments")
                         .HasColumnType("text");
@@ -81,11 +79,16 @@ namespace Api.Persistence.Migrations
                 {
                     b.HasBaseType("API.Entities.Contact");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
+
+                    b.ToTable(t =>
+                        {
+                            t.HasCheckConstraint("CK_Contacts_Gender_Enum", "\"Gender\" IN (0, 1)");
+                        });
 
                     b.HasDiscriminator().HasValue("Person");
                 });

@@ -3,10 +3,10 @@ using API.Enums;
 
 namespace Api.Dtos.OrganizationDtos
 {
-    public class CreateOrganizationRequestDto : CreateContactDto
+    public class UpdateOrganizationRequestDto : UpdateContactDto
     {
         public string? Website { get; set; }
         public string? Email { get; set; }
-        public OrganizationType OrganizationType { get; set; }
+        public OrganizationType? OrganizationType { get; set; }
     }
 }
