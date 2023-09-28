@@ -6,12 +6,12 @@ namespace Api.Services.Interfaces
     {
         Task<Organization> CreateOrganization(Organization organization);
 
-        Task<Organization> GetOrganization(int id);
+        Task<Organization> GetOrganization(Guid id);
 
         Task<IEnumerable<Organization>> GetAllOrganizations();
 
         Task UpdateOrganization(Organization organization);
 
-        Task DeleteOrganization(int id);
+        Task DeleteOrganization(Guid id);
     }
 }

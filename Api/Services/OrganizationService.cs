@@ -22,7 +22,7 @@ namespace Api.Services
             return organization;
         }
 
-        public async Task<Organization> GetOrganization(int id)
+        public async Task<Organization> GetOrganization(Guid id)
         {
             return await _context.Organizations.FindAsync(id);
         }
@@ -38,7 +38,7 @@ namespace Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteOrganization(int id)
+        public async Task DeleteOrganization(Guid id)
         {
             var organization = await _context.Organizations.FindAsync(id);
             _context.Organizations.Remove(organization);

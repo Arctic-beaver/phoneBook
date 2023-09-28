@@ -22,7 +22,7 @@ namespace Api
                 cfg.CreateMap<CreatePersonRequestDto, Person>();
 
                 cfg.CreateMap<Organization, OrganizationToFrontDto>();
-                cfg.CreateMap<Person, CreatePersonRequestDto>();
+                cfg.CreateMap<Person, PersonToFrontDto>();
 
                 cfg.CreateMap<UpdateOrganizationRequestDto, Organization>()
                     .ForMember(dest => dest.Name, opt => opt.Condition(src => src.Name != null))

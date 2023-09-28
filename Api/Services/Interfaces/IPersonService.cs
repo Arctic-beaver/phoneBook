@@ -6,12 +6,12 @@ namespace Api.Services.Interfaces
     {
         Task<Person> CreatePerson(Person person);
 
-        Task<Person> GetPerson(int id);
+        Task<Person> GetPerson(Guid id);
 
         Task<IEnumerable<Person>> GetAllPersons();
 
         Task UpdatePerson(Person person);
 
-        Task DeletePerson(int id);
+        Task DeletePerson(Guid id);
     }
 }

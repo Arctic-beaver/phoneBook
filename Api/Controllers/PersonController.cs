@@ -27,7 +27,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<PersonToFrontDto> GetPerson(int id)
+        public async Task<PersonToFrontDto> GetPerson(Guid id)
         {
             var person = await _personService.GetPerson(id);
             return _mapper.Map<PersonToFrontDto>(person);
@@ -50,7 +50,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerson(int id)
+        public async Task<IActionResult> DeletePerson(Guid id)
         {
             await _personService.DeletePerson(id);
             return Ok();

@@ -27,7 +27,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<OrganizationToFrontDto> GetOrganization(int id)
+        public async Task<OrganizationToFrontDto> GetOrganization(Guid id)
         {
             var organization = await _organizationService.GetOrganization(id);
             return _mapper.Map<OrganizationToFrontDto>(organization);
@@ -36,8 +36,8 @@ namespace Api.Controllers
         [HttpGet("all")]
         public async Task<OrganizationToFrontDto[]> GetAll()
         {
-            var persons = await _organizationService.GetAllOrganizations();
-            return _mapper.Map<List<OrganizationToFrontDto>>(persons).ToArray();
+            var organizations = await _organizationService.GetAllOrganizations();
+            return _mapper.Map<List<OrganizationToFrontDto>>(organizations).ToArray();
         }
 
         [HttpPut]
@@ -50,7 +50,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrganization(int id)
+        public async Task<IActionResult> DeleteOrganization(Guid id)
         {
             await _organizationService.DeleteOrganization(id);
             return Ok();

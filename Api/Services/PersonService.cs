@@ -22,7 +22,7 @@ namespace Api.Services
             return person;
         }
 
-        public async Task<Person> GetPerson(int id)
+        public async Task<Person> GetPerson(Guid id)
         {
             return await _context.Persons.FindAsync(id);
         }
@@ -38,7 +38,7 @@ namespace Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeletePerson(int id)
+        public async Task DeletePerson(Guid id)
         {
             var person = await _context.Persons.FindAsync(id);
             _context.Persons.Remove(person);
