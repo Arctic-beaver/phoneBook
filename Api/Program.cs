@@ -8,7 +8,6 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
@@ -26,15 +25,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
 
 using (var scope = app.Services.CreateScope())
 {
