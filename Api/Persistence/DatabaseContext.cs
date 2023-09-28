@@ -13,7 +13,7 @@ namespace API.Persistence
 
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Organization> Organization { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
