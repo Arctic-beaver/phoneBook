@@ -40,7 +40,7 @@ namespace Api.Controllers
             return _mapper.Map<List<PersonToFrontDto>>(persons).ToArray();
         }
 
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> UpdatePerson(UpdatePersonRequestDto request)
         {
             var person = await _personService.GetPerson(request.Id);

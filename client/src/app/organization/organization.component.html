@@ -1,0 +1,24 @@
+<div class="mt-5"></div>
+
+<div class="container">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Comments</th>
+            <th>Organization Type</th>
+            <th>Website</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let organization of organizations$ | async">
+        <td>{{ organization.name }}</td>
+        <td>{{ organization.phoneNumber }}</td>
+        <td>{{ organization.comments }}</td>
+        <td>{{ organization.organizationType | enumToString: OrganizationType }}</td>
+        <td>{{ organization.website }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

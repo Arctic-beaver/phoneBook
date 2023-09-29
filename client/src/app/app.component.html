@@ -1,0 +1,15 @@
+<app-nav></app-nav>
+
+<div class="d-grid gap-2">
+    <button (click)="toggleView()" class="mt-5 btn btn-dark btn-outline-success btn-lg" type="button">
+        {{ showPerson ? 'Go to Organizations' : 'Go to Persons' }}
+    </button>
+  </div>
+
+<ng-container *ngIf="showPerson; else organizationSection">
+    <app-person></app-person>
+  </ng-container>
+  
+  <ng-template #organizationSection>
+    <app-organization></app-organization>
+  </ng-template>

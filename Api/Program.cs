@@ -25,6 +25,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin",
+        builder =>
+        {
+            builder
+                .AllowAnyOrigin() // Разрешить запросы с любых доменов
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 app.MapControllers();
 
@@ -34,6 +46,7 @@ using (var scope = app.Services.CreateScope())
     services.GetRequiredService<IDatabaseContext>().Database.Migrate();
 }
 
+app.UseCors("AllowAnyOrigin");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
