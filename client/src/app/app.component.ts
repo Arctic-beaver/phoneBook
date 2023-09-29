@@ -10,6 +10,9 @@ export class AppComponent {
   
   showPerson = false;
 
+  ngOnInit() {
+  }
+
   constructor() { }
 
   toggleView(): void {

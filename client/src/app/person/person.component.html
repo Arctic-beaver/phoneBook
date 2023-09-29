@@ -1,7 +1,13 @@
 <div class="mt-5"></div>
 
-<div class="container">
+<div class="container" *ngIf="isInitialMode">
 
+  <button (click)="activateCreatingMode()" class="btn btn-success rounded-circle position-fixed" style="top: 120px; right: 50px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 17 17" fill="currentColor" class="bi bi-plus-lg">
+      <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+    </svg>
+  </button>
+  
     <table class="table table-hover">
         <thead>
             <tr>
@@ -23,4 +29,65 @@
         </tbody>
     </table>
 
+</div>
+
+<div class="container" *ngIf="isEditingMode || isCreatingMode"> 
+  <div class="mb-2">
+    <label class="form-label" >Name:</label>
+    <input class="form-control" type="text" [(ngModel)]="activePerson.name">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Phone Number:</label>
+    <input class="form-control" type="text" [(ngModel)]="activePerson.phoneNumber">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Comments:</label>
+    <textarea class="form-control" [(ngModel)]="activePerson.comments"></textarea>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Birth Date:</label>
+    <input class="form-control" type="date" [(ngModel)]="activePerson.birthDate"> 
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Gender:</label>
+    <select class="form-select" [(ngModel)]="activePerson.gender">
+      <option [ngValue]="Gender.Male">Male</option>
+      <option [ngValue]="Gender.Female">Female</option>
+    </select>
+  </div>
+
+  <button *ngIf="isEditingMode" (click)="updatePerson(activePerson)" class="btn btn-success">Save</button>
+  <button *ngIf="isEditingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+
+  <button *ngIf="isCreatingMode" (click)="createPerson(activePerson)" class="btn btn-success">Add</button>
+  <button *ngIf="isCreatingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+</div>
+
+<div class="container" *ngIf="isObservingMode"> 
+  <div class="mb-3">
+    <label class="form-label">Name:</label>
+    <span>{{ activePerson.name }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Phone Number:</label>
+    <span>{{ activePerson.phoneNumber }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Comments:</label>
+    <span>{{ activePerson.comments }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Birth Date:</label>
+    <span>{{ activePerson.birthDate | date: 'shortDate' }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Gender:</label>
+    <span>{{ activePerson.gender || 0 | enumToString: Gender }}</span>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <button (click)="activateInitialMode()" class="btn btn-secondary flex-fill rounded-0">Close</button>
+    <button (click)="activateEditingMode()" class="btn btn-success flex-fill rounded-0">Edit</button>
+    <button (click)="deletePerson(activePerson.id)" class="btn btn-danger flex-fill rounded-0">Delete</button>
+  </div>
 </div>

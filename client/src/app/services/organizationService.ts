@@ -19,12 +19,12 @@ baseUrl = environment.apiUrl + "organization";
     return this.http.get<Organization[]>(`${this.baseUrl}/${id}`);
   }
 
-  create(person: InputOrganization) {
-    return this.http.post<Organization>(this.baseUrl, person);
+  create(organization: InputOrganization) {
+    return this.http.post<Organization>(this.baseUrl, organization);
   }
 
-  update(person: Organization) {
-    return this.http.patch<Organization>(this.baseUrl, person);
+  update(organization: Organization) {
+    return this.http.patch<Organization>(this.baseUrl, organization);
   }
 
   delete(id: string) {

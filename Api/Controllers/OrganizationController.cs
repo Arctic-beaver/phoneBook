@@ -40,7 +40,7 @@ namespace Api.Controllers
             return _mapper.Map<List<OrganizationToFrontDto>>(organizations).ToArray();
         }
 
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> UpdateOrganization(UpdateOrganizationRequestDto request)
         {
             var organization = await _organizationService.GetOrganization(request.Id);

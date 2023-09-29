@@ -1,18 +1,25 @@
 <div class="mt-5"></div>
 
-<div class="container">
-<table class="table table-hover">
+<div class="container" *ngIf="isInitialMode">
+
+  <button (click)="activateCreatingMode()" class="btn btn-success rounded-circle position-fixed" style="top: 120px; right: 50px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 17 17" fill="currentColor" class="bi bi-plus-lg">
+      <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+    </svg>
+  </button>
+  
+  <table class="table table-hover">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Comments</th>
-            <th>Organization Type</th>
-            <th>Website</th>
-        </tr>
+      <tr>
+        <th>Name</th>
+        <th>Contact Number</th>
+        <th>Comments</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+      </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let organization of organizations$ | async">
+      <tr *ngFor="let organization of organizations$ | async" (click)="onRowClick(organization)">
         <td>{{ organization.name }}</td>
         <td>{{ organization.phoneNumber }}</td>
         <td>{{ organization.comments }}</td>
@@ -21,4 +28,66 @@
       </tr>
     </tbody>
   </table>
+
+</div>
+
+<div class="container" *ngIf="isEditingMode || isCreatingMode"> 
+  <div class="mb-2">
+    <label class="form-label" >Name:</label>
+    <input class="form-control" type="text" [(ngModel)]="activeOrganization.name">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Phone Number:</label>
+    <input class="form-control" type="text" [(ngModel)]="activeOrganization.phoneNumber">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Comments:</label>
+    <textarea class="form-control" [(ngModel)]="activeOrganization.comments"></textarea>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Organization Type:</label>
+    <select class="form-select" [(ngModel)]="activeOrganization.organizationType">
+      <option [ngValue]="OrganizationType.Private">Private</option>
+      <option [ngValue]="OrganizationType.Public">Public</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Website:</label>
+    <input class="form-control" type="text" [(ngModel)]="activeOrganization.website"> 
+  </div>
+
+  <button *ngIf="isEditingMode" (click)="updateOrganization(activeOrganization)" class="btn btn-success">Save</button>
+  <button *ngIf="isEditingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+
+  <button *ngIf="isCreatingMode" (click)="createOrganization(activeOrganization)" class="btn btn-success">Add</button>
+  <button *ngIf="isCreatingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+</div>
+
+<div class="container" *ngIf="isObservingMode"> 
+  <div class="mb-3">
+    <label class="form-label">Name:</label>
+    <span>{{ activeOrganization.name }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Phone Number:</label>
+    <span>{{ activeOrganization.phoneNumber }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Comments:</label>
+    <span>{{ activeOrganization.comments }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Organization Type:</label>
+    <span>{{ activeOrganization.organizationType | enumToString: OrganizationType }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Website:</label>
+    <span>{{ activeOrganization.website }}</span>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <button (click)="activateInitialMode()" class="btn btn-secondary flex-fill rounded-0">Close</button>
+    <button (click)="activateEditingMode()" class="btn btn-success flex-fill rounded-0">Edit</button>
+    <button (click)="deleteOrganization(activeOrganization.id)" class="btn btn-danger flex-fill rounded-0">Delete</button>
+  </div>
 </div>

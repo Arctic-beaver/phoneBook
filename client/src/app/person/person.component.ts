@@ -3,6 +3,7 @@ import { Person } from '../models/person';
 import { PersonService } from '../services/personService';
 import { Observable } from 'rxjs';
 import { Gender } from '../models/gender';
+import { InputPerson } from '../models/inputPerson';
 
 @Component({
   selector: 'app-person',
@@ -13,39 +14,92 @@ export class PersonComponent implements OnInit {
 
   persons$: Observable<Person[]> = this.personService.getAll();
   Gender = Gender;
+  isObservingMode = false;
+  isCreatingMode = false;
+  isEditingMode = false;
+  isInitialMode = true;
+  activePerson: Person = {
+    id: '',
+    name: '',
+    phoneNumber: '',
+    gender: 0
+  };
 
   constructor(private personService: PersonService) {}
 
   ngOnInit(): void {
-    this.persons$ = this.personService.getAll();
+    this.updatePersonList()
   }
 
   onRowClick(person: Person) {
-    // В этом методе вы можете выполнить действия при клике на строку
     console.log('Clicked on row with index:', person.id);
+    this.activateObservingMode(person);
   }
 
-  // Метод для создания нового человека
+  activateObservingMode(person: Person){
+    this.deactivateAllMods();
+    this.activePerson = person;
+    this.isObservingMode = true;
+  }
+
+  activateEditingMode(){
+    this.deactivateAllMods();
+    this.isEditingMode = true;
+  }
+
+  activateCreatingMode(){
+    this.deactivateAllMods();
+    this.isCreatingMode = true;
+  }
+
+  activateInitialMode(){
+    this.deactivateAllMods()
+    this.isInitialMode = true;
+    this.activePerson = {
+      id: '',
+      name: '',
+      phoneNumber: '',
+      gender: 0
+    };
+    this.updatePersonList();
+  }
+
+  deactivateAllMods(){
+    this.isObservingMode = false;
+    this.isEditingMode = false;
+    this.isCreatingMode = false;
+    this.isInitialMode = false;
+  }
+
+  updatePersonList(){
+    this.persons$ = this.personService.getAll();
+  }
+
   createPerson(person: Person): void {
-    this.personService.create(person).subscribe(() => {
-      // Обновляем коллекцию людей после успешного создания нового человека
+    const inputPerson: InputPerson = {
+      name: person.name,
+      phoneNumber: person.phoneNumber,
+      comments: person.comments,
+      birthDate: person.birthDate,
+      gender: person.gender
+    };
+    this.personService.create(inputPerson).subscribe(() => {
       this.persons$ = this.personService.getAll();
     });
+    this.activateInitialMode();
   }
 
-  // Метод для обновления существующего человека
   updatePerson(person: Person): void {
     this.personService.update(person).subscribe(() => {
-      // Обновляем коллекцию людей после успешного обновления существующего человека
       this.persons$ = this.personService.getAll();
     });
+    this.activateObservingMode(person);
   }
 
-  // Метод для удаления человека
   deletePerson(id: string): void {
     this.personService.delete(id).subscribe(() => {
-      // Обновляем коллекцию людей после успешного удаления человека
       this.persons$ = this.personService.getAll();
     });
+    this.activateInitialMode();
   }
 }
