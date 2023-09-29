@@ -56,11 +56,13 @@
     </select>
   </div>
 
-  <button *ngIf="isEditingMode" (click)="updatePerson(activePerson)" class="btn btn-success">Save</button>
-  <button *ngIf="isEditingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+  <div class="d-flex justify-content-between">
+    <button *ngIf="isEditingMode" (click)="updatePerson(activePerson)" class="btn btn-success flex-fill rounded-0">Save</button>
+    <button *ngIf="isEditingMode" (click)="activateInitialMode()" class="btn btn-secondary flex-fill rounded-0">Cancel</button>
 
-  <button *ngIf="isCreatingMode" (click)="createPerson(activePerson)" class="btn btn-success">Add</button>
-  <button *ngIf="isCreatingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+    <button *ngIf="isCreatingMode" (click)="createPerson(activePerson)" class="btn btn-success flex-fill rounded-0">Add</button>
+    <button *ngIf="isCreatingMode" (click)="activateInitialMode()" class="btn btn-secondary flex-fill rounded-0">Cancel</button>
+  </div>
 </div>
 
 <div class="container" *ngIf="isObservingMode"> 

@@ -14,8 +14,9 @@
         <th>Name</th>
         <th>Contact Number</th>
         <th>Comments</th>
-        <th>Date of Birth</th>
-        <th>Gender</th>
+        <th>Organization Type</th>
+        <th>Website</th>
+        <th>Email</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
         <td>{{ organization.comments }}</td>
         <td>{{ organization.organizationType | enumToString: OrganizationType }}</td>
         <td>{{ organization.website }}</td>
+        <td>{{ organization.email }}</td>
       </tr>
     </tbody>
   </table>
@@ -55,12 +57,19 @@
     <label class="form-label">Website:</label>
     <input class="form-control" type="text" [(ngModel)]="activeOrganization.website"> 
   </div>
+  <div class="mb-3">
+    <label class="form-label">Email:</label>
+    <input class="form-control" type="text" [(ngModel)]="activeOrganization.email"> 
+  </div>
 
-  <button *ngIf="isEditingMode" (click)="updateOrganization(activeOrganization)" class="btn btn-success">Save</button>
-  <button *ngIf="isEditingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+  <div class="d-flex justify-content-between">
+    <button *ngIf="isEditingMode" (click)="updateOrganization(activeOrganization)" class="btn btn-success flex-fill rounded-0">Save</button>
+    <button *ngIf="isEditingMode" (click)="activateInitialMode()" class="btn btn-secondary flex-fill rounded-0">Cancel</button>
 
-  <button *ngIf="isCreatingMode" (click)="createOrganization(activeOrganization)" class="btn btn-success">Add</button>
-  <button *ngIf="isCreatingMode" (click)="activateInitialMode()" class="btn btn-secondary">Cancel</button>
+    <button *ngIf="isCreatingMode" (click)="createOrganization(activeOrganization)" class="btn btn-success flex-fill rounded-0">Add</button>
+    <button *ngIf="isCreatingMode" (click)="activateInitialMode()" class="btn btn-secondary flex-fill rounded-0">Cancel</button>
+  </div>
+
 </div>
 
 <div class="container" *ngIf="isObservingMode"> 
@@ -83,6 +92,10 @@
   <div class="mb-3">
     <label class="form-label">Website:</label>
     <span>{{ activeOrganization.website }}</span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Email:</label>
+    <span>{{ activeOrganization.email }}</span>
   </div>
 
   <div class="d-flex justify-content-between">

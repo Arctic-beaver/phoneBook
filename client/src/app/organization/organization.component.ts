@@ -81,7 +81,8 @@ export class OrganizationComponent implements OnInit {
       phoneNumber: organization.phoneNumber,
       comments: organization.comments,
       organizationType: organization.organizationType,
-      email: organization.email
+      email: organization.email,
+      website: organization.website
     };
     this.organizationService.create(inputOrganization).subscribe(() => {
       this.organizations$ = this.organizationService.getAll();
