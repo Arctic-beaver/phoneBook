@@ -1,4 +1,4 @@
-﻿namespace API.Enums
+﻿namespace Api.Enums
 {
     public enum OrganizationType
     {

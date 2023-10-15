@@ -8,7 +8,7 @@ namespace Api.Controllers
 {
     [Route("api/person")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class PersonController : ApiController
     {
         private readonly IPersonService _personService;
         private readonly Mapper _mapper;
@@ -21,6 +21,11 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePerson(CreatePersonRequestDto request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception(GetErrorListFromModelState(ModelState));
+            }
+
             var person = _mapper.Map<Person>(request);
             await _personService.CreatePerson(person);
             return Ok();
@@ -43,6 +48,11 @@ namespace Api.Controllers
         [HttpPatch]
         public async Task<IActionResult> UpdatePerson(UpdatePersonRequestDto request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception(GetErrorListFromModelState(ModelState));
+            }
+
             var person = await _personService.GetPerson(request.Id);
             person = _mapper.Map(request, person);
             await _personService.UpdatePerson(person);

@@ -1,4 +1,4 @@
-﻿using API.Enums;
+﻿using Api.Enums;
 
 namespace API.Entities
 {

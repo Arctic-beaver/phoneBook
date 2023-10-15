@@ -1,5 +1,5 @@
 ﻿using Api.Dtos.ContactDtos;
-using API.Enums;
+using Api.Enums;
 
 namespace Api.Dtos.OrganizationDtos
 {

@@ -4,6 +4,7 @@ using API.Persistence;
 using API.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,13 @@ builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IOrganizationService, OrganizationService>();
 builder.Services.AddDbContext<IDatabaseContext, DatabaseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddControllers();
+
+builder.Services.AddControllers().AddFluentValidation(fv =>
+{
+    fv.RegisterValidatorsFromAssemblyContaining<Program>();
+    fv.DisableDataAnnotationsValidation = true;
+});
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

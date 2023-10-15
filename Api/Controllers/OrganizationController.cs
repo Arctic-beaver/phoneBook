@@ -8,7 +8,7 @@ namespace Api.Controllers
 {
     [Route("api/organization")]
     [ApiController]
-    public class OrganizationController : ControllerBase
+    public class OrganizationController : ApiController
     {
         private readonly IOrganizationService _organizationService;
         private readonly Mapper _mapper;
@@ -21,6 +21,11 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrganization(CreateOrganizationRequestDto request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception(GetErrorListFromModelState(ModelState));
+            }
+
             var organization = _mapper.Map<Organization>(request);
             await _organizationService.CreateOrganization(organization);
             return Ok();
@@ -43,6 +48,11 @@ namespace Api.Controllers
         [HttpPatch]
         public async Task<IActionResult> UpdateOrganization(UpdateOrganizationRequestDto request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception(GetErrorListFromModelState(ModelState));
+            }
+
             var organization = await _organizationService.GetOrganization(request.Id);
             organization = _mapper.Map(request, organization);
             await _organizationService.UpdateOrganization(organization);
