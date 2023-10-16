@@ -12,6 +12,6 @@ namespace Api.Services.Interfaces
 
         Task UpdateOrganization(Organization organization);
 
-        Task DeleteOrganization(Guid id);
+        Task DeleteOrganization(Organization organization);
     }
 }

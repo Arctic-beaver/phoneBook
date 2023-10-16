@@ -38,9 +38,8 @@ namespace Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeletePerson(Guid id)
+        public async Task DeletePerson(Person person)
         {
-            var person = await _context.Persons.FindAsync(id);
             _context.Persons.Remove(person);
             await _context.SaveChangesAsync();
         }

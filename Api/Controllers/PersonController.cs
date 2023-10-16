@@ -27,15 +27,27 @@ namespace Api.Controllers
             }
 
             var person = _mapper.Map<Person>(request);
+
+            if (person == null)
+            {
+                return BadRequest("Invalid data provided for creating a new person.");
+            }
+
             await _personService.CreatePerson(person);
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public async Task<PersonToFrontDto> GetPerson(Guid id)
+        public async Task<IActionResult> GetPerson(Guid id)
         {
             var person = await _personService.GetPerson(id);
-            return _mapper.Map<PersonToFrontDto>(person);
+
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<PersonToFrontDto>(person));
         }
 
         [HttpGet("all")]
@@ -54,7 +66,19 @@ namespace Api.Controllers
             }
 
             var person = await _personService.GetPerson(request.Id);
+
+            if (person == null)
+            {
+                return NotFound();
+            }
+
             person = _mapper.Map(request, person);
+
+            if (person == null)
+            {
+                return BadRequest("Invalid data provided for updating person.");
+            }
+
             await _personService.UpdatePerson(person);
             return Ok();
         }
@@ -62,8 +86,16 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePerson(Guid id)
         {
-            await _personService.DeletePerson(id);
+            var person = await _personService.GetPerson(id);
+
+            if (person == null)
+            {
+                return NotFound();
+            }
+
+            await _personService.DeletePerson(person);
             return Ok();
         }
+
     }
 }

@@ -27,15 +27,25 @@ namespace Api.Controllers
             }
 
             var organization = _mapper.Map<Organization>(request);
+
+            if (organization == null)
+            {
+                return BadRequest("Invalid data provided for creating a new organization.");
+            }
+
             await _organizationService.CreateOrganization(organization);
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public async Task<OrganizationToFrontDto> GetOrganization(Guid id)
+        public async Task<IActionResult> GetOrganization(Guid id)
         {
             var organization = await _organizationService.GetOrganization(id);
-            return _mapper.Map<OrganizationToFrontDto>(organization);
+            if (organization == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<OrganizationToFrontDto>(organization));
         }
 
         [HttpGet("all")]
@@ -54,7 +64,19 @@ namespace Api.Controllers
             }
 
             var organization = await _organizationService.GetOrganization(request.Id);
+
+            if (organization == null)
+            {
+                return NotFound();
+            }
+
             organization = _mapper.Map(request, organization);
+
+            if (organization == null)
+            {
+                return BadRequest("Invalid data provided for updating organization.");
+            }
+
             await _organizationService.UpdateOrganization(organization);
             return Ok();
         }
@@ -62,7 +84,14 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganization(Guid id)
         {
-            await _organizationService.DeleteOrganization(id);
+            var organization = await _organizationService.GetOrganization(id);
+
+            if (organization == null)
+            {
+                return NotFound();
+            }
+
+            await _organizationService.DeleteOrganization(organization);
             return Ok();
         }
     }

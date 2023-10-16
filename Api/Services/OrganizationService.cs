@@ -38,9 +38,8 @@ namespace Api.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteOrganization(Guid id)
+        public async Task DeleteOrganization(Organization organization)
         {
-            var organization = await _context.Organizations.FindAsync(id);
             _context.Organizations.Remove(organization);
             await _context.SaveChangesAsync();
         }

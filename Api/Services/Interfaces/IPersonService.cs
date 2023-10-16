@@ -12,6 +12,6 @@ namespace Api.Services.Interfaces
 
         Task UpdatePerson(Person person);
 
-        Task DeletePerson(Guid id);
+        Task DeletePerson(Person person);
     }
 }
